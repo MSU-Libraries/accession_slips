@@ -30,8 +30,8 @@ class YaleAccessionSlipsController < ApplicationController
     begin
       input_stream = java.io.FileInputStream.new(fo_file.path)
 
-      fopfac = FopFactory.newInstance
-      fopfac.setBaseURL( File.join(ASUtils.find_base_directory, 'stylesheets') )
+      config = java.io.File.new(File.join(ASUtils.find_base_directory, 'stylesheets', 'fop-config.xml'))
+      fopfac = FopFactory.newInstance(config)
       fop = fopfac.newFop(MimeConstants::MIME_PDF, output_stream)
       transformer = TransformerFactory.newInstance.newTransformer()
       res = SAXResult.new(fop.getDefaultHandler)
